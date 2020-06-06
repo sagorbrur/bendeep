@@ -6,6 +6,10 @@
 
 `pip install bendeep`
 
+## Pretrained Model
+* [Sentiment Analysis](https://github.com/sagorbrur/bendeep/tree/master/models)
+
+
 ## API
 
 ### Sentiment Analysis
