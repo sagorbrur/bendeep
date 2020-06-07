@@ -4,7 +4,7 @@ import setuptools
 
 setuptools.setup(
     name="bendeep",
-    version="1.0",
+    version="1.1",
     author="Sagor Sarker",
     author_email="sagorhem3532@gmail.com",
     description="BENDeep is a pytorch based deep learning solution for Bengali NLP Task",
