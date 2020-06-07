@@ -6,6 +6,9 @@
 
 `pip install bendeep`
 
+### Dependency
+* pytorch 1.5.0+
+
 ## Pretrained Model
 * [Sentiment Analysis](https://github.com/sagorbrur/bendeep/tree/master/models)
 
