@@ -11,7 +11,8 @@ from .utils import is_torch_available
 
 if is_torch_available():
     #import
-    pass
+    from bendeep import sentiment
+    
 if not is_torch_available():
     logger.warning("Please install pytorch")
 

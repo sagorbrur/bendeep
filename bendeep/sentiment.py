@@ -156,15 +156,24 @@ def train(data_path, batch_size = 64, epochs=100, model_name="trained.pt"):
 
       tqdm.write(f'Epoch #{epoch + 1}\tTrain Loss: {epoch_loss:.3f}')
 
-  torch.save(model, model_name)
+  # torch.save(model, model_name)
+  torch.save(model.state_dict(), model_name)
 
 
 
 
-def analyze(model_path, vocab_path, text):
+def analyze(model_path, vocab_path, text, batch_size=64):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     dataset = Sequences_infer(vocab_path, max_seq_len=128)
-    model = torch.load(model_path)
+    # model = torch.load(model_path)
+    model = RNN(
+    hidden_size=128,
+    vocab_size=len(dataset.token2idx),
+    device=device,
+    batch_size=batch_size,
+    )
+    model = model.to(device)
+    model.load_state_dict(torch.load(model_path))
     model.eval()
     with torch.no_grad():
         test_vector = torch.LongTensor([dataset.pad(dataset.encode(text))]).to(device)

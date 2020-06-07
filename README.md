@@ -30,15 +30,18 @@ sentiment.analyze(model_path, vocab_path, text)
 To train this model you need a csv file with one column `review` means text and another column `sentiment` with 0 or 1, where 1 for positive and 0 for negative sentiment.
 
 
-| review           | sentiment  |
-| ------------- | :-----:|
-| তোমাকে খুব সুন্দর লাগছে। | 1 |
-| আজকের আবহাওয়া খুব খারাপ। | 0|
+|  | review           | sentiment  |
+| ------- | ------------- | :-----:|
+| 0 | তোমাকে খুব সুন্দর লাগছে। | 1 |
+| 1 | আজকের আবহাওয়া খুব খারাপ। | 0|
 
 
 ```py
 from bendeep import sentiment
+data_path = "sentiment_data.csv"
 sentiment.train(data_path)
+# you can also pass these parameter
+# sentiment.train(data_path, batch_size = 64, epochs=100, model_name="trained.pt")
 
 ```
 
