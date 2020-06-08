@@ -64,19 +64,22 @@ after successfully training it will complete training and save model as `trained
 
 #### Translate Bengali to English
 
-This model is a seq2seq attentional model trained with [this]() dataset with loss 0.0.
+This model is a seq2seq attentional model trained with [this](https://github.com/sagorbrur/bendeep/tree/master/data) dataset with loss 0.0.
 
 ```py
-from bendeep import translation
-encoder_model = "encoder.pt"
-decoder_model = "decoder.pt"
-input_vocab = "input_lang.pkl"
-output_vocab ="output_lang.pkl"
-input_text = "যাও।"
-output = translation.en2bn(input_vocab, output_vocab, encoder_model, decoder_model, input_text)
-print(output)
 
-# output: = go .
+from bendeep import translation
+from bendeep.translation import EncoderRNN
+from bendeep.translation import AttnDecoderRNN
+
+data_path = "data/translation/eng-ben.txt"
+encoder = "models/translation/encoder.pt"
+decoder = "models/translation/decoder.pt"
+input_sentence = "আমার শীত করছে।"
+translation.bn2en(data_path, encoder, decoder, input_sentence)
+# outupt
+# > আমার শীত করছে ।
+# = i feel cold .
 
 ```
 
@@ -93,13 +96,15 @@ He goes to school.  সে বিদ্যালয়ে যায়।
 
 ```py
 from bendeep import translation
-data_path = "data/translation/eng-ben.txt"
+from bendeep.translation import EncoderRNN
+from bendeep.translation import AttnDecoderRNN
 
+data_path = "data/translation/eng-ben.txt"
 translation.training(data_path, iteration=10000)
 
 ```
 
-after successfully training it will complete training and save encoder and decoder model as `encoder.pt`, `decoder.pt` and save vocab file as `input_lang.pkl` and `output_lang.pkl`. Also display some random evaluation results.
+after successfully training it will complete training and save encoder and decoder model as `encoder.pt`, `decoder.pt`. Also display some random evaluation results.
 
 
 ## References
