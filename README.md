@@ -100,7 +100,7 @@ from bendeep.translation import EncoderRNN
 from bendeep.translation import AttnDecoderRNN
 
 data_path = "data/translation/eng-ben.txt"
-translation.training(data_path, iteration=10000)
+translation.training(data_path, iteration=75000)
 
 ```
 
