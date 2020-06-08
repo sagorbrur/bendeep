@@ -1,6 +1,6 @@
 
 
-__version__="1.0"
+__version__="1.2"
 
 import os
 import logging
