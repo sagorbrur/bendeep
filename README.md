@@ -10,7 +10,8 @@
 * pytorch 1.5.0+
 
 ## Pretrained Model
-* [Sentiment Analysis](https://github.com/sagorbrur/bendeep/tree/master/models)
+* [Sentiment Analysis](https://github.com/sagorbrur/bendeep/tree/master/models/sentiment)
+* [Translation Model](https://github.com/sagorbrur/bendeep/tree/master/models/translation)
 
 
 ## API
@@ -18,7 +19,9 @@
 ### Sentiment Analysis
 
 #### Analyzing Sentiment
-This sentiment analysis model trained with more than 4000 labeled sentiment sentence with loss 0.073 at 150 epochs.
+This sentiment analysis model is a RNN based `GRU` model trained with [socian sentiment dataset](https://github.com/socian-ai/socian-bangla-sentiment-dataset-labeled) with loss 0.073 in 150 epochs.
+Dataset size: 4000 sentences
+
 
 ```py
 from bendeep import sentiment
@@ -32,6 +35,12 @@ sentiment.analyze(model_path, vocab_path, text)
 #### Training Sentiment Model
 To train this model you need a csv file with one column `review` means text and another column `sentiment` with 0 or 1, where 1 for positive and 0 for negative sentiment.
 
+Example:
+```
+,review,sentiment
+0,তোমাকে খুব সুন্দর লাগছে।,1
+1,আজকের আবহাওয়া খুব খারাপ।,0
+```
 
 |  | review           | sentiment  |
 | ------- | ------------- | :-----:|
@@ -50,6 +59,55 @@ sentiment.train(data_path)
 
 after successfully training it will complete training and save model as `trained.pt` also save vocab file as `vocab.txt`
 
+
+### Machine Translation
+
+#### Translate Bengali to English
+
+This model is a seq2seq attentional model trained with [this]() dataset with loss 0.0.
+
+```py
+from bendeep import translation
+encoder_model = "encoder.pt"
+decoder_model = "decoder.pt"
+input_vocab = "input_lang.pkl"
+output_vocab ="output_lang.pkl"
+input_text = "যাও।"
+output = translation.en2bn(input_vocab, output_vocab, encoder_model, decoder_model, input_text)
+print(output)
+
+# output: = go .
+
+```
+
+#### Training Translation Model
+
+To train translation model you need a dataset in `.txt` format with tab separate `input` and `target` sentences.
+
+Example:
+
+```
+I eat rice. আমি ভাত খাই।
+He goes to school.  সে বিদ্যালয়ে যায়।
+```
+
+```py
+from bendeep import translation
+data_path = "eng-bn.txt"
+
+translation.train(data_path, iteration=75000)
+
+```
+
+after successfully training it will complete training and save encoder and decoder model as `encoder.pt`, `decoder.pt` and save vocab file as `input_lang.pkl` and `output_lang.pkl`. Also display some random evaluation results.
+
+
+## References
+
+* [pytorch](https://pytorch.org/)
+* [pytorch tutorial](https://pytorch.org/tutorials/)
+* [en-bn dataset](https://www.manythings.org/anki/)
+* [socian sentiment dataset](https://github.com/socian-ai/socian-bangla-sentiment-dataset-labeled)
 
 
 
