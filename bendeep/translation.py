@@ -98,7 +98,6 @@ eng_prefixes = (
 )
 
 
-
 def prepareData(data_path, lang1, lang2, reverse=False):
     input_lang, output_lang, pairs = readLangs(data_path, lang1, lang2, reverse)
     for pair in pairs:
@@ -321,10 +320,6 @@ def training(data_path, hidden_size=256, iteration=75000):
   input_lang, output_lang, pairs = prepareData(data_path, 'eng', 'bn', True)
   print("Sample Sentence: ")
   print(random.choice(pairs))
-  with open('input_lang.pkl', 'wb') as output:
-    pickle.dump(input_lang, output, pickle.HIGHEST_PROTOCOL)
-  with open('output_lang.pkl', 'wb') as output:
-    pickle.dump(output_lang, output, pickle.HIGHEST_PROTOCOL)
   encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
   attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
   trainIters(encoder1, attn_decoder1, input_lang, output_lang, pairs, iteration, print_every=5000)
@@ -371,15 +366,10 @@ def evaluate(encoder, decoder, input_lang, output_lang, sentence, max_length=MAX
 
         return decoded_words, decoder_attentions[:di + 1]
 
-def evaluateRandomly(data_path, encoder_model, decoder_model, n=10, hidden_size=256):
+def evaluateRandomly(data_path, encoder, decoder, n=10, hidden_size=256):
   input_lang, output_lang, pairs = prepareData(data_path, 'eng', 'ben', True)
-  encoder = EncoderRNN(input_lang.n_words, hidden_size).to(device)
-  decoder = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
 
-  encoder = torch.load(encoder_model)
-  encoder.eval()
-  decoder = torch.load(decoder_model)
-  decoder.eval()
+
   for i in range(n):
       pair = random.choice(pairs)
       print('>', pair[0])
@@ -389,19 +379,16 @@ def evaluateRandomly(data_path, encoder_model, decoder_model, n=10, hidden_size=
       print('<', output_sentence)
       print('')
 
-def bn2en(input_lang, output_lang, encoder_model, decoder_model, input_sentence, hidden_size=256):
+def bn2en(data_path, encoder_model, decoder_model, input_sentence, hidden_size=256):
+  input_lang, output_lang, pairs = prepareData(data_path, 'eng', 'bn', True)
+  # encoder = EncoderRNN(input_lang.n_words, hidden_size).to(device)
+  # decoder = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
   input_sentence = normalizeString(input_sentence)
-  with open(input_lang, 'rb') as input:
-    input_lang = pickle.load(input)
-
-  with open(output_lang, 'rb') as input:
-    output_lang = pickle.load(input)
-
-  
   encoder = torch.load(encoder_model)
   encoder.eval()
   decoder = torch.load(decoder_model)
   decoder.eval()
+
 
   try:
   
@@ -410,12 +397,9 @@ def bn2en(input_lang, output_lang, encoder_model, decoder_model, input_sentence,
     output = " ".join(output)
     print("> "+ input_sentence)
     print("= "+output)
-  # print(" ".join(output))
   except:
     print("Error: \n")
     print("Explanation: ")
     print('Sentence contains out of vocabulary word. That means sentence has a word which not exist in trained data')
-
-
 
 
