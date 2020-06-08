@@ -390,6 +390,7 @@ def evaluateRandomly(data_path, encoder_model, decoder_model, n=10, hidden_size=
       print('')
 
 def bn2en(input_lang, output_lang, encoder_model, decoder_model, input_sentence, hidden_size=256):
+  input_sentence = normalizeString(input_sentence)
   with open(input_lang, 'rb') as input:
     input_lang = pickle.load(input)
 
