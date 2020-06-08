@@ -4,7 +4,7 @@ import setuptools
 
 setuptools.setup(
     name="bendeep",
-    version="1.1",
+    version="1.2",
     author="Sagor Sarker",
     author_email="sagorhem3532@gmail.com",
     description="BENDeep is a pytorch based deep learning solution for Bengali NLP Task",
@@ -23,5 +23,7 @@ setuptools.setup(
         "pandas",
         "tqdm",
         "scikit-learn",
+        "matplotlib",
+        "numpy",
     ],
 )
