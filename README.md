@@ -93,9 +93,9 @@ He goes to school.  সে বিদ্যালয়ে যায়।
 
 ```py
 from bendeep import translation
-data_path = "eng-bn.txt"
+data_path = "data/translation/eng-ben.txt"
 
-translation.train(data_path, iteration=75000)
+translation.training(data_path, iteration=10000)
 
 ```
 
