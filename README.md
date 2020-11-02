@@ -1,5 +1,9 @@
 # BENDeep
 
+
+[![Downloads](https://pepy.tech/badge/bendeep)](https://pepy.tech/project/bendeep)
+[![Notebook](https://img.shields.io/badge/notebook-colab%20notebook-orange)](https://github.com/sagorbrur/bendeep/blob/master/notebook/bendeep_colab_notebook.ipynb)
+
 `BENDeep` is a pytorch based deep learning solution for Bengali NLP Task like `bengali translation`, `bengali sentiment analysis` and so on. 
 
 ## Installation
